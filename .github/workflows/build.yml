@@ -7,38 +7,8 @@ permissions:
 on:
   workflow_dispatch:
     inputs:
-      build_kernel_op8_oos131_a13:
-        description: "Build Kernel OnePlus 8 (OOS13.1)?"
-        required: true
-        type: boolean
-        default: true
-      build_kernel_k20p_aosp_a15:
-        description: "Build Kernel Redmi K20Pro (Soviet-Star-OSS)(Based-AOSP A15)?"
-        required: true
-        type: boolean
-        default: true
-      build_kernel_mix2s_evox_a15:
-        description: "Build Kernel Xiaomi Mix2s (EVOX-A15-Official)?"
-        required: true
-        type: boolean
-        default: true
-      build_kernel_note4x_aosp_a13:
-        description: "Build Kernel Redmi Note4X (Based-AOSP A13)?"
-        required: true
-        type: boolean
-        default: true
-      build_kernel_blackshark4_miui_a11:
-        description: "Build Kernel Black Shark 4 (MIUI 12 A11)?"
-        required: true
-        type: boolean
-        default: true
-      build_kernel_op8_nameless15_a15:
+      build_kernel_kebab_nameless15_a15:
         description: "Build Kernel OnePlus 8 (Nameless 15)?"
-        required: true
-        type: boolean
-        default: true
-      build_kernel_mi10s_aosp_a15:
-        description: "Build Kernel Xiaomi 10S (Based-AOSP Android 15)?"
         required: true
         type: boolean
         default: true
@@ -49,49 +19,19 @@ on:
         default: true
 
 jobs:
-  build_kernel_op8_oos131_a13:
-    uses: ./.github/workflows/build_kernel_op8_oos13.1_a13.yml
+  build_kernel_kebab_nameless15_a15:
+    uses: ./.github/workflows/build_kernel_kebab_nameless15_a15.yml
     secrets: inherit
-    if: ${{ inputs.build_kernel_op8_oos131_a13 }}
-  build_kernel_k20p_aosp_a15:
-    uses: ./.github/workflows/build_kernel_k20p_aosp_a15.yml
-    secrets: inherit
-    if: ${{ inputs.build_kernel_k20p_aosp_a15 }}
-  build_kernel_mix2s_evox_a15:
-    uses: ./.github/workflows/build_kernel_mix2s_evox_a15.yml
-    secrets: inherit
-    if: ${{ inputs.build_kernel_mix2s_evox_a15 }}
-  build_kernel_note4x_aosp_a13:
-    uses: ./.github/workflows/build_kernel_note4x_aosp_a13.yml
-    secrets: inherit
-    if: ${{ inputs.build_kernel_note4x_aosp_a13 }}
-  build_kernel_blackshark4_miui_a11:
-    uses: ./.github/workflows/build_kernel_blackshark4_miui_a11.yml
-    secrets: inherit
-    if: ${{ inputs.build_kernel_blackshark4_miui_a11 }}
-  build_kernel_op8_nameless15_a15:
-    uses: ./.github/workflows/build_kernel_op8_nameless15_a15.yml
-    secrets: inherit
-    if: ${{ inputs.build_kernel_op8_nameless15_a15 }}
-  build_kernel_mi10s_aosp_a15:
-    uses: ./.github/workflows/build_kernel_mi10s_aosp_a15.yml
-    secrets: inherit
-    if: ${{ inputs.build_kernel_mi10s_aosp_a15 }}
+    if: ${{ inputs.build_kernel_kebab_nameless15_a15 }}
 
   trigger-release:
     runs-on: ubuntu-latest
     needs:
-      - build_kernel_op8_oos131_a13
-      - build_kernel_k20p_aosp_a15
-      - build_kernel_mix2s_evox_a15
-      - build_kernel_note4x_aosp_a13
-      - build_kernel_blackshark4_miui_a11
-      - build_kernel_op8_nameless15_a15
-      - build_kernel_mi10s_aosp_a15
+      - build_kernel_kebab_nameless15_a15
     if: ${{ inputs.make_release }}
     env:
-      REPO_OWNER: JackA1ltman
-      REPO_NAME: NonGKI_Kernel_Build
+      REPO_OWNER: watercatlxh
+      REPO_NAME: Kernel_Kebab_Nameless_15
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       RELEASE_NAME: "NonGKI Kernel Pre-built"
       RELEASE_NOTES: |
@@ -99,17 +39,8 @@ jobs:
 
         | Device Name | Codename | Kernel | System | Android | Method | KernelSU | SuSFS | LXC |
         |----------|----------|----------|----------|----------|----------|----------|----------|----------|
-        | OnePlus 8 (CN) | instantnoodle | 4.19 | OxygenOS/ColorOS 13.1 | 13 | AnyKernel3 | Magic | ✅ | ❌ |
-        | OnePlus 8 (All) | instantnoodle | 4.19 | Nameless 15 | 15 | AnyKernel3 | Next | ✅ | ❌ |
-        | Xiaomi MIX2S (CN) | polaris | 4.9 | Evolution X 10.2.1 | 15 | Boot Image | Next | ✅ | ❌ |
-        | Redmi K20 Pro (CN) | raphael | 4.14 | Based-AOSP | 15 | AnyKernel3 | Next | ✅ | ❌ |
-        | Redmi Note 4X (CN) | mido | 4.9 | Based-AOSP | 13 | AnyKernel3 | Next | ✅ | ❌ |
-        | Black Shark 4 | penrose | 4.19 | MIUI/JoyUI 12 | 11 | AnyKernel3 | Next | ❌ | ❌ |
-        | Xiaomi 10S | thyme | 4.19 | Based-AOSP | 15 | AnyKernel3 | Next | ✅ | ❌ |
+        | OnePlus 8T | kebab | 4.19 | Nameless 15 | 15 | AnyKernel3 | Next | ✅ | ❌ |
 
-        - Redmi Note 4X (CN) can only be used for the **Qualcomm** version. Please do not attempt it on the MediaTek version.
-        - OnePlus 8 (CN) has been tested and can be used on the OnePlus 9R. Theoretically, it should also work on the OnePlus 8T/8Pro.
-        - The Black Shark 4 cannot patch SuSFS due to a kernel defect (missing ANDROID_KABI). To enhance stealth and security, it is the first device to switch from the regular manual hook to [VFS Hook](https://github.com/backslashxx/KernelSU/issues/5).
         - OnePlus 8, Nameless 15, in 9R may experience WiFi failure. Please flash with caution.
         - The KernelSU version is for reference only. It is normal for the KernelSU version embedded in SUSFS to be lower.
 
