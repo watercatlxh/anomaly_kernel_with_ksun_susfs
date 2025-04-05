@@ -2,9 +2,9 @@
 After some attempts, I found that building directly in the kernel source code is not feasible.  
 In fact, it should be run in the AOSP source code to produce a viable kernel.  
 Many thanks to  
-https://xdaforums.com/t/kernel-anomaly-kernel-for-oneplus-8t-a14-15-03-12-25-custom.4704735/ The_Anomalist for their help  
-https://github.com/The-Anomalist/Anomaly-Kernel/ Anomaly Kernel source code  
-https://github.com/JackA1ltman/NonGKI_Kernel_patches JackAltman's kernel patches  
+[XDA - Anomaly Kernel](https://xdaforums.com/t/kernel-anomaly-kernel-for-oneplus-8t-a14-15-03-12-25-custom.4704735/) The_Anomalist for their help  
+[Github - Anomaly Kernel](https://github.com/The-Anomalist/Anomaly-Kernel/) Anomaly Kernel source code  
+[Github - JackAltMan's Kernel Patch](https://github.com/JackA1ltman/NonGKI_Kernel_patches) JackAltman's kernel patches  
 
 ### Build Guide  
 This kernel is based on crDroid, so you should first clone the crDroid repository.  
