@@ -73,6 +73,8 @@ After completion, you can switch to the kernel folder and apply the KernelSU sus
 ### Patch KernelSU and susfs (Optional)  
 ```bash
 cd kernel/oneplus/sm8250  
+
+# Modify the config
 echo "CONFIG_KSU=y" >> ./arch/arm64/configs/vendor/kona-perf_defconfig  
 echo "CONFIG_KSU_SUSFS=y" >> ./arch/arm64/configs/vendor/kona-perf_defconfig  
 echo "CONFIG_KSU_SUSFS_HAS_MAGIC_MOUNT=y" >> ./arch/arm64/configs/vendor/kona-perf_defconfig  
@@ -90,6 +92,7 @@ echo "CONFIG_KSU_SUSFS_HIDE_KSU_SUSFS_SYMBOLS=y" >> ./arch/arm64/configs/vendor/
 echo "CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y" >> ./arch/arm64/configs/vendor/kona-perf_defconfig  
 echo "CONFIG_KSU_SUSFS_OPEN_REDIRECT=y" >> ./arch/arm64/configs/vendor/kona-perf_defconfig  
 
+# Install KernelSU
 # KSUN  
 curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next-susfs/kernel/setup.sh" | bash -s next-susfs-dev  
 
@@ -105,6 +108,7 @@ curl -LSs "https://raw.githubusercontent.com/ShirkNeko/KernelSU/main/kernel/setu
 ```bash
 git clone https://github.com/JackA1ltman/NonGKI_Kernel_Patches.git -b op_kernel NonGKI_Kernel_Patches --depth=1  
 git clone https://gitlab.com/simonpunk/susfs4ksu.git -b kernel-4.19 susfs4ksu --depth=1  
+
 cp susfs4ksu/kernel_patches/fs/* fs/  
 cp susfs4ksu/kernel_patches/include/linux/* include/linux/  
 ```  
@@ -121,8 +125,8 @@ echo "CONFIG_RELR=n" >> ./arch/arm64/configs/vendor/kona-perf_defconfig
 echo "CONFIG_KASAN_STACK_ENABLE=n" >> ./arch/arm64/configs/vendor/kona-perf_defconfig  
 sed -i 's/# CONFIG_SECCOMP is not set/CONFIG_SECCOMP=y/' ./arch/arm64/configs/vendor/kona-perf_defconfig  
 
-cp susfs4ksu/kernel_patches/50_add_susfs_in_kernel-$KERNEL_VERSION.patch ./  
-patch -p1 < 50_add_susfs_in_kernel-${{ env.KERNEL_VERSION }}.patch || true  
+cp susfs4ksu/kernel_patches/50_add_susfs_in_kernel-4.19.patch ./  
+patch -p1 < 50_add_susfs_in_kernel-4.19.patch || true  
 
 cp NonGKI_Kernel_Patches/kona_oos/namespace_fixed.patch ./  
 cp NonGKI_Kernel_Patches/kona_oos/task_mmu_fixed.patch ./  
